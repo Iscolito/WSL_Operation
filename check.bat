@@ -12,6 +12,7 @@ echo 查看详细状态		ID=4
 echo 修改版本号(Ubuntu) 	ID=5
 echo 查看wsl中的文件		ID=6
 echo 变更用户权限		ID=7
+echo 更改虚拟硬盘地址	ID=reset
 echo 退出			ID=e
 echo ---------------------------------
 echo	      mod by Iscolito
@@ -26,7 +27,8 @@ if "%ID%"=="5"  goto cmd5
 if "%ID%"=="6"  goto cmd6
 if "%ID%"=="7"  goto cmd7
 if "%ID%"=="e"  goto con2
-
+if "%ID%"=="reset"  goto cmd8
+goto back
 
 :cmd1
 wsl --shutdown
@@ -71,6 +73,21 @@ ubuntu config --default-user %user_name%
 wsl --shutdown
 echo 已成功切换到%user_name%，并重启了wsl
 goto back
+
+:cmd8
+set /p if_reset=**注意，此操作将重装Ubuntu，发生错误可能导致信息丢失，是否继续(y/n):
+if "%if_reset%"=="y"  goto reset
+if "%if_reset%"=="n"  goto back
+goto back
+:reset
+set /p target_dir=请在目标位置新建文件夹并复制目录至此:
+wsl --export Ubuntu %target_dir%\ubuntu.tar
+wsl --unregister Ubuntu
+wsl --import Ubuntu %target_dir%\ubuntu %target_dir%\ubuntu.tar --version 2
+echo 虚拟硬盘地址已切换到%target_dir%\ubuntu，您可以删除%target_dir%下的ubuntu.tar
+echo 默认登录用户已设置为root
+goto back
+
 
 :back
 set /p choice=是否要返回菜单(y/n):
