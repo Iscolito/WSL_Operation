@@ -5,6 +5,7 @@ wsl --list --verbose
 goto menu
 :menu
 echo =-=-=-=-=选择进行的操作=-=-=-=-=
+echo 开启ubuntu		ID=start
 echo 停止运行		ID=1
 echo 安装新的linux 		ID=2
 echo 查看全部wsl命令 	ID=3
@@ -21,6 +22,7 @@ echo	      mod by Iscolito
 echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 set /p ID=ID=
 
+if "%ID%"=="start"  goto cmds
 if "%ID%"=="1"  goto cmd1
 if "%ID%"=="2"  goto cmd2
 if "%ID%"=="3"  goto cmd3
@@ -120,5 +122,8 @@ echo.
 
 :con2
 exit
+
+:cmds
+ubuntu.exe
 
 pause
