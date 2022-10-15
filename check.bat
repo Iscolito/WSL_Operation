@@ -58,8 +58,9 @@ wsl.exe --set-version Ubuntu 2
 goto back
 
 :cmd6
-echo 在linux命令行中运行explorer.exe .
-echo 若要修改文件，请先变更用户权限
+echo 执行默认路径\\wsl$\Ubuntu
+echo 若要修改非home文件夹的文件，请先变更用户权限
+powershell -command "start \\wsl$\Ubuntu"
 goto back
 
 :cmd7
